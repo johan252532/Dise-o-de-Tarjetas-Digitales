@@ -1,0 +1,181 @@
+/* =================================
+   1. Variables y Estilos Globales
+   ================================= */
+:root {
+    --color-bg: #ffffff;
+    --color-bg-light: #f7f9fc;
+    --color-text: #2c3a47;
+    --color-text-light: #5c6b7a;
+    --color-primary: #0067f4;
+    --color-primary-dark: #0056d1;
+    --color-secondary: #4685a5; /* Un segundo azul para el gradiente */
+    --color-tertiary: #99eebf; /* Un tercer color para el gradiente */
+    --color-border: #e1e8f0;
+    --font-main: 'Inter', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    line-height: 1.7;
+}
+
+/* =================================
+   2. Estructura y Helpers
+   ================================= */
+.container { width: 90%; max-width: 1000px; margin: 0 auto; }
+.section { padding: 80px 0; }
+.section-title { font-size: 2.5rem; text-align: center; margin-bottom: 50px; font-weight: 900; }
+.btn { display: inline-block; padding: 12px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; }
+.btn-primary { background-color: var(--color-primary); color: white; }
+.btn-primary:hover { background-color: var(--color-primary-dark); transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0, 103, 244, 0.3); }
+.btn-secondary { background-color: transparent; color: var(--color-primary); border: 2px solid var(--color-primary); }
+.btn-secondary:hover { background-color: var(--color-primary); color: white; transform: translateY(-3px); }
+.btn-whatsapp { font-size: 1.2rem; background-color: #25D366; color: white; padding: 15px 30px; }
+.btn-whatsapp:hover { filter: brightness(1.1); transform: scale(1.05); }
+
+/* =================================
+   3. NUEVO: Animaciones de Scroll
+   ================================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Animación para los elementos del hero que aparecen al cargar */
+@keyframes fadeInOnLoad {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+    animation: fadeInOnLoad 0.8s ease-out forwards;
+    opacity: 0; /* Empieza invisible */
+}
+/* Staggered animation delay for hero elements */
+.hero-title { animation-delay: 0.2s; }
+.hero-subtitle { animation-delay: 0.4s; }
+.hero-cta-container { animation-delay: 0.6s; }
+
+
+/* =================================
+   4. Secciones Específicas
+   ================================= */
+
+/* --- HERO MEJORADO --- */
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 80px 20px;
+    color: white; /* El texto será blanco para contrastar con el gradiente */
+    background: linear-gradient(-45deg, var(--color-primary), var(--color-secondary), var(--color-tertiary), #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    transition: padding 0.4s ease; /* Para el header pegajoso */
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* NUEVO: Header Pegajoso (Sticky) */
+.hero.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.hero.sticky .hero-photo, .hero.sticky .hero-subtitle, .hero.sticky .hero-cta-container {
+    display: none; /* Ocultamos elementos para hacerlo más compacto */
+}
+.hero.sticky .hero-title {
+    font-size: 1.5rem; /* Reducimos el título */
+    margin: 0;
+}
+body.header-is-sticky {
+    padding-top: 150px; /* Evita que el contenido salte cuando el header se vuelve 'fixed' */
+}
+
+
+.hero-photo { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 5px solid rgba(255,255,255,0.8); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+.hero-title { font-size: 3.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+.hero-subtitle { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px auto; color: rgba(255,255,255,0.9); }
+.hero-cta-container a { margin: 0 10px; }
+/* Botón secundario especial para el hero */
+.hero .btn-secondary {
+    color: white;
+    border-color: white;
+}
+.hero .btn-secondary:hover {
+    background-color: white;
+    color: var(--color-primary);
+}
+
+
+.value-prop { background-color: white; }
+.value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; text-align: center; }
+.value-card i { font-size: 2.5rem; color: var(--color-primary); margin-bottom: 15px; }
+.value-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+
+.portfolio { background-color: var(--color-bg-light); }
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.project-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.project-card:hover { transform: translateY(-10px); box-shadow: 0 12px 28px rgba(0,0,0,0.15); }
+.project-card img { width: 100%; height: 200px; object-fit: cover; }
+.project-info { padding: 25px; }
+.project-link { display: inline-block; margin-top: 15px; color: var(--color-primary); text-decoration: none; font-weight: 700; }
+.project-link i { margin-left: 5px; transition: transform 0.3s ease; }
+.project-link:hover i { transform: translateX(5px); }
+
+.packages { background-color: white; }
+.packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; align-items: center; }
+.package-card { background: var(--color-bg-light); padding: 40px 30px; border-radius: 15px; text-align: center; border: 2px solid transparent; transition: all 0.3s ease; }
+.package-card:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+.package-card.recommended { 
+    border-color: var(--color-primary); 
+    transform: scale(1.08); 
+    position: relative;
+    z-index: 10;
+}
+.package-card.recommended:hover { transform: scale(1.1); }
+.package-card .badge { background-color: var(--color-primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 15px; }
+.package-card h3 { font-size: 1.4rem; }
+.price { font-size: 2.5rem; font-weight: 900; margin: 10px 0; color: var(--color-primary); }
+.package-card ul { list-style: none; margin: 20px 0; }
+.package-card ul li { margin-bottom: 10px; }
+
+/* NUEVO: Sección de Testimonios */
+.testimonials { background-color: var(--color-bg-light); }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+.testimonial-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    border-left: 5px solid var(--color-primary);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+.testimonial-text {
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 15px;
+}
+.testimonial-author {
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.contact { text-align: center; }
+.contact-subtitle { max-width: 500px; margin: 0 auto 30px auto; font-size: 1.1rem; }
+
+.footer { text-align: center; padding: 25px; background: var(--color-text); color: white; margin-top: 60px; }
